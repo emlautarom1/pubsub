@@ -12,6 +12,7 @@ wss.on('open', () => {
   let count = 0;
   let byteLength = 0;
   wss.on('message', (msg) => {
+    if (count === 0) { console.time('* Processing time'); }
     count++;
     byteLength += msg.byteLength;
 
@@ -22,6 +23,7 @@ wss.on('open', () => {
 
   wss.on('close', () => {
     console.log(`Connection closed:\n* Messages received: ${count}\n* Bytes received: ${formatBytes(byteLength)}`);
+    if (count > 0) { console.timeEnd('* Processing time'); }
   });
 });
 
